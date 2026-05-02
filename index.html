@@ -474,7 +474,7 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, { rootMargin: '200px' });
+}, { rootMargin: '400px' });
 
 function renderGallery(files) {
   gallery.innerHTML = '';
@@ -493,6 +493,9 @@ function renderGallery(files) {
     skel.className = 'skel';
    const img = document.createElement('img');
     img.className = 'loading';
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.referrerPolicy = "no-referrer";
     img.dataset.src = thumbFromFile(f);
     img.alt = 'Map ' + label;
     img.onload = () => {
@@ -622,6 +625,44 @@ lbImg.addEventListener('touchend', e => {
 
 // Init
 renderGallery(FILES);
+let loaded = 80;
+
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+    const next = FILES.slice(loaded, loaded + 60);
+    if (next.length === 0) return;
+
+    loaded += 60;
+
+    next.forEach((f, i) => {
+      const url = urlFromFile(f);
+      const label = labelFromFile(f);
+
+      const div = document.createElement('div');
+      div.className = 'thumb';
+
+      const skel = document.createElement('div');
+      skel.className = 'skel';
+
+      const img = document.createElement('img');
+      img.className = 'loading';
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.referrerPolicy = "no-referrer";
+      img.dataset.src = thumbFromFile(f);
+
+      img.onload = () => {
+        img.classList.remove('loading');
+        skel.remove();
+      };
+
+      div.appendChild(skel);
+      div.appendChild(img);
+      gallery.appendChild(div);
+      observer.observe(div);
+    });
+  }
+});
 </script>
 </body>
 </html>
