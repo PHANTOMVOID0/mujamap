@@ -458,7 +458,9 @@ function labelFromFile(f) {
 function urlFromFile(f) {
   return BASE + '/BS_RS/' + f.replace(/ /g, '%20');
 }
-
+function thumbFromFile(f) {
+  return BASE + '/BS_RS_THUMBS/' + f.replace(/ /g, '%20');
+}
 // Intersection Observer for lazy loading
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -491,7 +493,7 @@ function renderGallery(files) {
     skel.className = 'skel';
    const img = document.createElement('img');
     img.className = 'loading';
-    img.dataset.src = url;
+    img.dataset.src = thumbFromFile(f);
     img.alt = 'Map ' + label;
     img.onload = () => {
       img.classList.remove('loading');
