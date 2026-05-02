@@ -33,18 +33,21 @@ const files = [
 "100-1 - (www.mouzamap.tech).jpg"
 ];
 
-// AUTO ADD IMAGES
 const gallery = document.getElementById("gallery");
 
 files.forEach(f => {
-  const encoded = encodeURIComponent(f);
-  const url = base + encoded;
+  // 🔥 FIX: encode ONLY spaces (not everything)
+  const url = base + f.replace(/ /g, "%20");
 
   const a = document.createElement("a");
   a.href = url;
   a.target = "_blank";
 
   const img = document.createElement("img");
+
+  // 🔥 IMPORTANT: set referrer policy (fixes R2 loading issues on Vercel)
+  img.referrerPolicy = "no-referrer";
+
   img.src = url;
 
   a.appendChild(img);
