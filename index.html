@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BS_RS Maps</title>
+<style>
+body { font-family: Arial; background:#111; color:white; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:10px;
+}
+img {
+  width:100%;
+  border-radius:8px;
+  transition:0.2s;
+}
+img:hover { transform:scale(1.05); }
+</style>
+</head>
+<body>
+
+<h2>BS_RS Maps</h2>
+
+<div class="grid" id="gallery"></div>
+
+<script>
+const base = "https://pub-1bb3f10aca5045d09702c06480c8856c.r2.dev/BS_RS/";
+
+const files = [
+"1 - (www.mouzamap.tech).jpg",
+"10 - (www.mouzamap.tech).jpg",
+"100-1 - (www.mouzamap.tech).jpg"
+];
+
+// AUTO ADD IMAGES
+const gallery = document.getElementById("gallery");
+
+files.forEach(f => {
+  const encoded = encodeURIComponent(f);
+  const url = base + encoded;
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.target = "_blank";
+
+  const img = document.createElement("img");
+  img.src = url;
+
+  a.appendChild(img);
+  gallery.appendChild(a);
+});
+</script>
+</body>
+</html>
