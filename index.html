@@ -456,7 +456,7 @@ function labelFromFile(f) {
 }
 
 function urlFromFile(f) {
-  return BASE + '/' + encodeURIComponent(f);
+  return BASE + '/BS_RS/' + f.replace(/ /g, '%20');
 }
 
 // Intersection Observer for lazy loading
@@ -468,7 +468,6 @@ const observer = new IntersectionObserver((entries) => {
         img.src = img.dataset.src;
         img.removeAttribute('data-src');
         img.onload = () => { img.classList.remove('loading'); img.classList.add('loaded'); };
-        img.onerror = () => { img.classList.remove('loading'); };
       }
       observer.unobserve(entry.target);
     }
@@ -490,8 +489,7 @@ function renderGallery(files) {
 
     const skel = document.createElement('div');
     skel.className = 'skel';
-
-    const img = document.createElement('img');
+   const img = document.createElement('img');
     img.className = 'loading';
     img.dataset.src = url;
     img.alt = 'Map ' + label;
@@ -499,6 +497,14 @@ function renderGallery(files) {
       img.classList.remove('loading');
       img.classList.add('loaded');
       skel.remove();
+    };
+    img.onerror = () => {
+      skel.remove();
+      img.style.display = 'none';
+      const err = document.createElement('div');
+      err.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:11px;color:#555;padding:8px;text-align:center;';
+      err.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3a3a3a" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 3-3 4 4"/></svg><span style="color:#444">' + label + '</span>';
+      div.appendChild(err);
     };
 
     const lbl = document.createElement('div');
