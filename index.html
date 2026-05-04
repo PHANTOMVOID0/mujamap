@@ -8,369 +8,128 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0f0e;
-    --surface: #161a18;
-    --border: #2a2f2d;
-    --accent: #c8a96e;
-    --accent2: #7eb89a;
-    --text: #e8e4dc;
-    --muted: #7a7f7c;
+    --bg: #0d0f0e; --surface: #161a18; --border: #2a2f2d;
+    --accent: #c8a96e; --accent2: #7eb89a;
+    --text: #e8e4dc; --muted: #7a7f7c;
     --overlay: rgba(13,15,14,0.94);
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Karla', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Karla', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── HEADER ── */
   header {
-    padding: 2.5rem 2rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: var(--overlay);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
+    padding: 2.5rem 2rem 1.5rem; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--overlay);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 100; display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
   }
+  .brand { display: flex; flex-direction: column; gap: 2px; }
+  .brand-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--accent); letter-spacing: .02em; line-height: 1; }
+  .brand-sub  { font-size: 12px; color: var(--muted); font-weight: 300; letter-spacing: .1em; text-transform: uppercase; }
+  .header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .count-badge  { font-size: 12px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; white-space: nowrap; }
+  .count-badge span { color: var(--accent2); font-weight: 500; }
 
-  .brand {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .brand-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: 0.02em;
-    line-height: 1;
-  }
-
-  .brand-sub {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .count-badge {
-    font-size: 12px;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 4px 12px;
-    white-space: nowrap;
-  }
-
-  .count-badge span {
-    color: var(--accent2);
-    font-weight: 500;
-  }
-
-  /* ── SEARCH + FILTER BAR ── */
   .controls {
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
+    padding: 1rem 2rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); background: var(--surface);
   }
-
-  .search-wrap {
-    position: relative;
-    flex: 1;
-    min-width: 180px;
-    max-width: 340px;
-  }
-
-  .search-wrap svg {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted);
-    pointer-events: none;
-  }
-
+  .search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 340px; }
+  .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
   #searchInput {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'Karla', sans-serif;
-    font-size: 14px;
-    padding: 8px 12px 8px 34px;
-    outline: none;
-    transition: border-color 0.2s;
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-family: 'Karla', sans-serif;
+    font-size: 14px; padding: 8px 12px 8px 34px; outline: none; transition: border-color .2s;
   }
-
   #searchInput:focus { border-color: var(--accent); }
   #searchInput::placeholder { color: var(--muted); }
 
-  .grid-toggle {
-    display: flex;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .grid-toggle button {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    padding: 7px 11px;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-    line-height: 0;
-  }
-
-  .grid-toggle button.active {
-    background: var(--accent);
-    color: var(--bg);
-  }
-
+  .grid-toggle { display: flex; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .grid-toggle button { background: transparent; border: none; color: var(--muted); padding: 7px 11px; cursor: pointer; transition: background .15s, color .15s; line-height: 0; }
+  .grid-toggle button.active { background: var(--accent); color: var(--bg); }
   .grid-toggle button:hover:not(.active) { background: var(--border); color: var(--text); }
-
-  #resultCount {
-    font-size: 12px;
-    color: var(--muted);
-    white-space: nowrap;
-  }
+  #resultCount { font-size: 12px; color: var(--muted); white-space: nowrap; }
 
   /* ── GALLERY GRID ── */
-  #gallery {
-    padding: 1.5rem 1.5rem 4rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    transition: grid-template-columns 0.2s;
-  }
-
+  #gallery { padding: 1.5rem 1.5rem 4rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
   #gallery.grid-lg { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
   #gallery.grid-sm { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; }
 
+  /* ── CARD ── */
   .thumb {
-    position: relative;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    border-radius: 6px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: transform 0.18s, border-color 0.18s;
+    position: relative; aspect-ratio: 4/3; overflow: hidden;
+    border-radius: 6px; background: var(--surface);
+    border: 1px solid var(--border); cursor: pointer;
+    transition: transform .18s, border-color .18s;
   }
-
   .thumb:hover { transform: scale(1.02); border-color: var(--accent); }
 
-  .thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: opacity 0.3s;
-  }
-
-  .thumb img.loading { opacity: 0; }
-  .thumb img.loaded  { opacity: 1; }
-
-  .thumb .label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px 8px 6px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.7));
-    font-size: 11px;
-    color: rgba(255,255,255,0.85);
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .thumb:hover .label { opacity: 1; }
-
-  /* placeholder skeleton */
+  /* skeleton — always in DOM, sits on top until image loads */
   .thumb .skel {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0; z-index: 1;
     background: linear-gradient(90deg, var(--surface) 25%, var(--border) 50%, var(--surface) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s infinite;
+    background-size: 200% 100%; animation: shimmer 1.4s infinite;
+    transition: opacity .35s;
   }
-
+  /* image loads → skeleton fades away */
+  .thumb.loaded .skel { opacity: 0; pointer-events: none; }
   @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-  /* ── LIGHTBOX ── */
-  #lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  /* image is always in the DOM but invisible until .loaded */
+  .thumb img {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    opacity: 0; transition: opacity .35s;
   }
+  .thumb.loaded img { opacity: 1; }
 
-  #lightbox.open { display: flex; }
-
-  #lb-img-wrap {
-    position: relative;
-    max-width: 94vw;
-    max-height: 84vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .thumb .label {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+    padding: 20px 8px 6px;
+    background: linear-gradient(transparent, rgba(0,0,0,.7));
+    font-size: 11px; color: rgba(255,255,255,.85);
+    font-weight: 400; letter-spacing: .03em;
+    opacity: 0; transition: opacity .2s;
   }
+  .thumb:hover .label { opacity: 1; }
 
-  #lb-img {
-    max-width: 94vw;
-    max-height: 84vh;
-    border-radius: 4px;
-    display: block;
-    box-shadow: 0 20px 80px rgba(0,0,0,0.8);
-    transition: opacity 0.2s;
+  /* error state */
+  .thumb .err {
+    position: absolute; inset: 0; z-index: 2; display: none;
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; font-size: 11px; color: #555; padding: 8px; text-align: center;
   }
+  .thumb.error .skel { display: none; }
+  .thumb.error .err  { display: flex; }
 
-  #lb-img.loading { opacity: 0.3; }
-
-  #lb-info {
-    margin-top: 14px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  #lb-label {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    color: var(--accent);
-  }
-
-  #lb-counter {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .lb-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    cursor: pointer;
-    padding: 6px 10px;
-    font-size: 12px;
-    font-family: 'Karla', sans-serif;
-    transition: background 0.15s, border-color 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
-  }
-
-  .lb-btn:hover { background: var(--border); border-color: var(--accent); }
-
-  .lb-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.6);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text);
-    transition: background 0.15s, border-color 0.15s;
-    z-index: 2;
-  }
-
-  .lb-nav:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  #lb-prev { left: -58px; }
-  #lb-next { right: -58px; }
-
-  #lb-close {
-    position: absolute;
-    top: 14px;
-    right: 18px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--muted);
-    font-size: 20px;
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.15s, border-color 0.15s;
-  }
-
-  #lb-close:hover { color: var(--text); border-color: var(--text); }
-
-  /* empty state */
-  #empty {
-    display: none;
-    grid-column: 1/-1;
-    padding: 4rem;
-    text-align: center;
-    color: var(--muted);
-  }
-
+  #empty { display: none; grid-column: 1/-1; padding: 4rem; text-align: center; color: var(--muted); }
   #empty p { font-size: 15px; }
 
-  /* ── MOBILE ── */
-  @media(max-width: 600px) {
+  /* ── LIGHTBOX ── */
+  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.95); z-index: 999; align-items: center; justify-content: center; flex-direction: column; }
+  #lightbox.open { display: flex; }
+  #lb-img-wrap { position: relative; max-width: 94vw; max-height: 84vh; display: flex; align-items: center; justify-content: center; }
+  #lb-img { max-width: 94vw; max-height: 84vh; border-radius: 4px; display: block; box-shadow: 0 20px 80px rgba(0,0,0,.8); transition: opacity .2s; }
+  #lb-img.loading { opacity: .3; }
+  #lb-info { margin-top: 14px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  #lb-label  { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--accent); }
+  #lb-counter{ font-size: 12px; color: var(--muted); }
+  .lb-btn { background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--text); cursor: pointer; padding: 6px 10px; font-size: 12px; font-family: 'Karla', sans-serif; transition: background .15s, border-color .15s; display: flex; align-items: center; gap: 5px; white-space: nowrap; text-decoration: none; }
+  .lb-btn:hover { background: var(--border); border-color: var(--accent); }
+  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.6); border: 1px solid var(--border); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); transition: background .15s, border-color .15s; z-index: 2; }
+  .lb-nav:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  #lb-prev { left: -58px; } #lb-next { right: -58px; }
+  #lb-close { position: absolute; top: 14px; right: 18px; background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 20px; cursor: pointer; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; transition: color .15s, border-color .15s; }
+  #lb-close:hover { color: var(--text); border-color: var(--text); }
+
+  @media(max-width:600px) {
     header { padding: 1.2rem 1rem 1rem; }
-    .controls { padding: 0.75rem 1rem; }
-    #gallery { padding: 1rem 0.75rem 3rem; gap: 6px; }
-    #gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-    #lb-prev { left: 6px; }
-    #lb-next { right: 6px; }
+    .controls { padding: .75rem 1rem; }
+    #gallery { padding: 1rem .75rem 3rem; gap: 6px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    #lb-prev { left: 6px; } #lb-next { right: 6px; }
     .lb-nav { width: 36px; height: 36px; }
   }
-
-  footer {
-    text-align: center;
-    padding: 2rem;
-    font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-  }
+  footer { text-align: center; padding: 2rem; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
   footer a { color: var(--accent2); text-decoration: none; }
 </style>
 </head>
@@ -388,12 +147,9 @@
 
 <div class="controls">
   <div class="search-wrap">
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="6.5" cy="6.5" r="5"/><line x1="10" y1="10" x2="14" y2="14"/>
-    </svg>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6.5" cy="6.5" r="5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
     <input type="search" id="searchInput" placeholder="Search by map number…" autocomplete="off">
   </div>
-
   <div class="grid-toggle">
     <button id="btnSm" title="Small grid" onclick="setGrid('sm')">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg>
@@ -405,14 +161,12 @@
       <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="14" rx="1"/><rect x="8" y="0" width="6" height="14" rx="1"/></svg>
     </button>
   </div>
-
   <span id="resultCount"></span>
 </div>
 
 <div id="gallery"></div>
 <div id="empty"><p>No maps found for that search.</p></div>
 
-<!-- LIGHTBOX -->
 <div id="lightbox" role="dialog" aria-modal="true" aria-label="Map viewer">
   <button id="lb-close" aria-label="Close">&times;</button>
   <div id="lb-img-wrap">
@@ -427,7 +181,7 @@
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3"/><rect x="2" y="11" width="12" height="3" rx="1"/></svg>
       Download
     </a>
-    <button class="lb-btn" onclick="copyLink()">
+    <button class="lb-btn" id="lb-copy-btn" onclick="copyLink()">
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a3 3 0 0 0 4.24 0l2-2a3 3 0 0 0-4.24-4.24l-1 1"/><path d="M10 7a3 3 0 0 0-4.24 0l-2 2a3 3 0 0 0 4.24 4.24l1-1"/></svg>
       Copy link
     </button>
@@ -435,234 +189,195 @@
 </div>
 
 <footer>
-  Hosted on <a href="https://pub-1bb3f10aca5045d09702c064808c8856.r2.dev" target="_blank">Cloudflare R2</a> &mdash; 461 maps &mdash; <a href="https://www.mouzamap.tech">mouzamap.tech</a>
+  Hosted on <a href="https://pub-1bb3f10aca5045d09702c064808c8856.r2.dev" target="_blank">Cloudflare R2</a>
+  &mdash; 461 maps &mdash; <a href="https://www.mouzamap.tech">mouzamap.tech</a>
 </footer>
 
 <script>
-const BASE = 'https://pub-1bb3f10aca5045d09702c064808c8856.r2.dev';
-
+const BASE  = 'https://pub-1bb3f10aca5045d09702c064808c8856.r2.dev';
 const FILES = ["1 - (www.mouzamap.tech).jpg","2-1 - (www.mouzamap.tech).jpg","2-2 - (www.mouzamap.tech).jpg","3-1 - (www.mouzamap.tech).jpg","3-2 - (www.mouzamap.tech).jpg","3-3 - (www.mouzamap.tech).jpg","3-4 - (www.mouzamap.tech).jpg","3-5 - (www.mouzamap.tech).jpg","4-1 - (www.mouzamap.tech).jpg","4-2 - (www.mouzamap.tech).jpg","4-3 - (www.mouzamap.tech).jpg","4-4 - (www.mouzamap.tech).jpg","4-5 - (www.mouzamap.tech).jpg","4-6 - (www.mouzamap.tech).jpg","5 - (www.mouzamap.tech).jpg","6-1 - (www.mouzamap.tech).jpg","6-2 - (www.mouzamap.tech).jpg","7 - (www.mouzamap.tech).jpg","8-1 - (www.mouzamap.tech).jpg","8-2 - (www.mouzamap.tech).jpg","8-3 - (www.mouzamap.tech).jpg","9-1 - (www.mouzamap.tech).jpg","9-2 - (www.mouzamap.tech).jpg","9-3 - (www.mouzamap.tech).jpg","10 - (www.mouzamap.tech).jpg","11 - (www.mouzamap.tech).jpg","12 - (www.mouzamap.tech).jpg","13-1 - (www.mouzamap.tech).jpg","13-2 - (www.mouzamap.tech).jpg","14 - (www.mouzamap.tech).jpg","15 - (www.mouzamap.tech).jpg","16 - (www.mouzamap.tech).jpg","17 - (www.mouzamap.tech).jpg","18 - (www.mouzamap.tech).jpg","19-1 - (www.mouzamap.tech).jpg","19-2 - (www.mouzamap.tech).jpg","20 - (www.mouzamap.tech).jpg","21 - (www.mouzamap.tech).jpg","22-1 - (www.mouzamap.tech).jpg","22-2 - (www.mouzamap.tech).jpg","23-1 - (www.mouzamap.tech).jpg","23-2 - (www.mouzamap.tech).jpg","24-1 - (www.mouzamap.tech).jpg","24-2 - (www.mouzamap.tech).jpg","24-3 - (www.mouzamap.tech).jpg","25 - (www.mouzamap.tech).jpg","26-1 - (www.mouzamap.tech).jpg","26-2 - (www.mouzamap.tech).jpg","27 - (www.mouzamap.tech).jpg","28 - (www.mouzamap.tech).jpg","29-1 - (www.mouzamap.tech).jpg","29-2 - (www.mouzamap.tech).jpg","30 - (www.mouzamap.tech).jpg","31 - (www.mouzamap.tech).jpg","32 - (www.mouzamap.tech).jpg","33 - (www.mouzamap.tech).jpg","34 - (www.mouzamap.tech).jpg","35 - (www.mouzamap.tech).jpg","36 - (www.mouzamap.tech).jpg","37-1 - (www.mouzamap.tech).jpg","37-2 - (www.mouzamap.tech).jpg","37-3 - (www.mouzamap.tech).jpg","38 - (www.mouzamap.tech).jpg","39 - (www.mouzamap.tech).jpg","40 - (www.mouzamap.tech).jpg","41-1 - (www.mouzamap.tech).jpg","41-2 - (www.mouzamap.tech).jpg","41-3 - (www.mouzamap.tech).jpg","41-4 - (www.mouzamap.tech).jpg","41-5 - (www.mouzamap.tech).jpg","41-6 - (www.mouzamap.tech).jpg","41-7 - (www.mouzamap.tech).jpg","41-8 - (www.mouzamap.tech).jpg","41-9 - (www.mouzamap.tech).jpg","41-10 - (www.mouzamap.tech).jpg","41-11 - (www.mouzamap.tech).jpg","41-12 - (www.mouzamap.tech).jpg","41-13 - (www.mouzamap.tech).jpg","41-14 - (www.mouzamap.tech).jpg","41-15 - (www.mouzamap.tech).jpg","41-16 - (www.mouzamap.tech).jpg","41-17 - (www.mouzamap.tech).jpg","41-18 - (www.mouzamap.tech).jpg","41-19 - (www.mouzamap.tech).jpg","41-20 - (www.mouzamap.tech).jpg","41-21 - (www.mouzamap.tech).jpg","41-22 - (www.mouzamap.tech).jpg","41-23 - (www.mouzamap.tech).jpg","41-24 - (www.mouzamap.tech).jpg","41-25 - (www.mouzamap.tech).jpg","41-26 - (www.mouzamap.tech).jpg","41-27 - (www.mouzamap.tech).jpg","41-28 - (www.mouzamap.tech).jpg","42-1 - (www.mouzamap.tech).jpg","42-2 - (www.mouzamap.tech).jpg","42-3 - (www.mouzamap.tech).jpg","42-4 - (www.mouzamap.tech).jpg","42-5 - (www.mouzamap.tech).jpg","42-6 - (www.mouzamap.tech).jpg","42-7 - (www.mouzamap.tech).jpg","43-1 - (www.mouzamap.tech).jpg","43-2 - (www.mouzamap.tech).jpg","46 - (www.mouzamap.tech).jpg","47 - (www.mouzamap.tech).jpg","48-1 - (www.mouzamap.tech).jpg","48-2 - (www.mouzamap.tech).jpg","48-3 - (www.mouzamap.tech).jpg","48-4 - (www.mouzamap.tech).jpg","48-5 - (www.mouzamap.tech).jpg","48-6 - (www.mouzamap.tech).jpg","48-7 - (www.mouzamap.tech).jpg","48-8 - (www.mouzamap.tech).jpg","48-9 - (www.mouzamap.tech).jpg","49-1 - (www.mouzamap.tech).jpg","49-2 - (www.mouzamap.tech).jpg","49-3 - (www.mouzamap.tech).jpg","50-1 - (www.mouzamap.tech).jpg","50-2 - (www.mouzamap.tech).jpg","50-3 - (www.mouzamap.tech).jpg","50-4 - (www.mouzamap.tech).jpg","50-5 - (www.mouzamap.tech).jpg","50-6 - (www.mouzamap.tech).jpg","50-7 - (www.mouzamap.tech).jpg","50-8 - (www.mouzamap.tech).jpg","50-9 - (www.mouzamap.tech).jpg","50-10 - (www.mouzamap.tech).jpg","50-11 - (www.mouzamap.tech).jpg","50-12 - (www.mouzamap.tech).jpg","50-13 - (www.mouzamap.tech).jpg","50-14 - (www.mouzamap.tech).jpg","50-15 - (www.mouzamap.tech).jpg","50-16 - (www.mouzamap.tech).jpg","50-17 - (www.mouzamap.tech).jpg","50-18 - (www.mouzamap.tech).jpg","50-19 - (www.mouzamap.tech).jpg","50-20 - (www.mouzamap.tech).jpg","50-21 - (www.mouzamap.tech).jpg","50-22 - (www.mouzamap.tech).jpg","50-23 - (www.mouzamap.tech).jpg","51 - (www.mouzamap.tech).jpg","52-1 - (www.mouzamap.tech).jpg","52-2 - (www.mouzamap.tech).jpg","53-1 - (www.mouzamap.tech).jpg","53-2 - (www.mouzamap.tech).jpg","54-1 - (www.mouzamap.tech).jpg","54-2 - (www.mouzamap.tech).jpg","54-3 - (www.mouzamap.tech).jpg","55 - (www.mouzamap.tech).jpg","56 - (www.mouzamap.tech).jpg","57-1 - (www.mouzamap.tech).jpg","57-2 - (www.mouzamap.tech).jpg","58-1 - (www.mouzamap.tech).jpg","58-2 - (www.mouzamap.tech).jpg","59 - (www.mouzamap.tech).jpg","60 - (www.mouzamap.tech).jpg","61 - (www.mouzamap.tech).jpg","62 - (www.mouzamap.tech).jpg","63 - (www.mouzamap.tech).jpg","64 - (www.mouzamap.tech).jpg","65 - (www.mouzamap.tech).jpg","66-1 - (www.mouzamap.tech).jpg","66-2 - (www.mouzamap.tech).jpg","66-3 - (www.mouzamap.tech).jpg","66-4 - (www.mouzamap.tech).jpg","67 - (www.mouzamap.tech).jpg","68 - (www.mouzamap.tech).jpg","69 - (www.mouzamap.tech).jpg","70 - (www.mouzamap.tech).jpg","71 - (www.mouzamap.tech).jpg","72-1 - (www.mouzamap.tech).jpg","72-2 - (www.mouzamap.tech).jpg","72-3 - (www.mouzamap.tech).jpg","72-4 - (www.mouzamap.tech).jpg","73-1 - (www.mouzamap.tech).jpg","73-2 - (www.mouzamap.tech).jpg","74-1 - (www.mouzamap.tech).jpg","74-2 - (www.mouzamap.tech).jpg","75-1 - (www.mouzamap.tech).jpg","75-2 - (www.mouzamap.tech).jpg","76 - (www.mouzamap.tech).jpg","77 - (www.mouzamap.tech).jpg","78-1 - (www.mouzamap.tech).jpg","78-2 - (www.mouzamap.tech).jpg","79 - (www.mouzamap.tech).jpg","80-1 - (www.mouzamap.tech).jpg","80-2 - (www.mouzamap.tech).jpg","80-3 - (www.mouzamap.tech).jpg","81 - (www.mouzamap.tech).jpg","82 - (www.mouzamap.tech).jpg","83 - (www.mouzamap.tech).jpg","84-1 - (www.mouzamap.tech).jpg","84-2 - (www.mouzamap.tech).jpg","84-3 - (www.mouzamap.tech).jpg","84-4 - (www.mouzamap.tech).jpg","85 - (www.mouzamap.tech).jpg","86 - (www.mouzamap.tech).jpg","87 - (www.mouzamap.tech).jpg","88-1 - (www.mouzamap.tech).jpg","88-2 - (www.mouzamap.tech).jpg","88-3 - (www.mouzamap.tech).jpg","89 - (www.mouzamap.tech).jpg","91 - (www.mouzamap.tech).jpg","92-1 - (www.mouzamap.tech).jpg","92-2 - (www.mouzamap.tech).jpg","93-1 - (www.mouzamap.tech).jpg","93-2 - (www.mouzamap.tech).jpg","97-1 - (www.mouzamap.tech).jpg","97-2 - (www.mouzamap.tech).jpg","97-3 - (www.mouzamap.tech).jpg","97-4 - (www.mouzamap.tech).jpg","98-1 - (www.mouzamap.tech).jpg","98-2 - (www.mouzamap.tech).jpg","98-3 - (www.mouzamap.tech).jpg","99-1 - (www.mouzamap.tech).jpg","99-2 - (www.mouzamap.tech).jpg","99-3 - (www.mouzamap.tech).jpg","99-4 - (www.mouzamap.tech).jpg","99-5 - (www.mouzamap.tech).jpg","99-6 - (www.mouzamap.tech).jpg","100-1 - (www.mouzamap.tech).jpg","100-2 - (www.mouzamap.tech).jpg","100-3 - (www.mouzamap.tech).jpg","100-4 - (www.mouzamap.tech).jpg","101-1 - (www.mouzamap.tech).jpg","101-2 - (www.mouzamap.tech).jpg","101-3 - (www.mouzamap.tech).jpg","101-4 - (www.mouzamap.tech).jpg","101-5 - (www.mouzamap.tech).jpg","102-1 - (www.mouzamap.tech).jpg","102-2 - (www.mouzamap.tech).jpg","102-3 - (www.mouzamap.tech).jpg","104-1 - (www.mouzamap.tech).jpg","104-2 - (www.mouzamap.tech).jpg","107-1 - (www.mouzamap.tech).jpg","107-2 - (www.mouzamap.tech).jpg","108 - (www.mouzamap.tech).jpg","109-1 - (www.mouzamap.tech).jpg","109-2 - (www.mouzamap.tech).jpg","110-1 - (www.mouzamap.tech).jpg","110-2 - (www.mouzamap.tech).jpg","111 - (www.mouzamap.tech).jpg","112-1 - (www.mouzamap.tech).jpg","112-2 - (www.mouzamap.tech).jpg","113-1 - (www.mouzamap.tech).jpg","113-2 - (www.mouzamap.tech).jpg","113-3 - (www.mouzamap.tech).jpg","114 - (www.mouzamap.tech).jpg","115 - (www.mouzamap.tech).jpg","116-1 - (www.mouzamap.tech).jpg","116-2 - (www.mouzamap.tech).jpg","116-3 - (www.mouzamap.tech).jpg","117-1 - (www.mouzamap.tech).jpg","117-2 - (www.mouzamap.tech).jpg","117-3 - (www.mouzamap.tech).jpg","117-4 - (www.mouzamap.tech).jpg","117-5 - (www.mouzamap.tech).jpg","118 - (www.mouzamap.tech).jpg","119 - (www.mouzamap.tech).jpg","120 - (www.mouzamap.tech).jpg","121-1 - (www.mouzamap.tech).jpg","121-2 - (www.mouzamap.tech).jpg","122-1 - (www.mouzamap.tech).jpg","122-2 - (www.mouzamap.tech).jpg","123 - (www.mouzamap.tech).jpg","124 - (www.mouzamap.tech).jpg","125 - (www.mouzamap.tech).jpg","126 - (www.mouzamap.tech).jpg","127 - (www.mouzamap.tech).jpg","128-1 - (www.mouzamap.tech).jpg","128-2 - (www.mouzamap.tech).jpg","129 - (www.mouzamap.tech).jpg","130 - (www.mouzamap.tech).jpg","131 - (www.mouzamap.tech).jpg","132 - (www.mouzamap.tech).jpg","133 - (www.mouzamap.tech).jpg","134 - (www.mouzamap.tech).jpg","135 - (www.mouzamap.tech).jpg","136 - (www.mouzamap.tech).jpg","137 - (www.mouzamap.tech).jpg","138 - (www.mouzamap.tech).jpg","139-1 - (www.mouzamap.tech).jpg","139-2 - (www.mouzamap.tech).jpg","139-3 - (www.mouzamap.tech).jpg","140 - (www.mouzamap.tech).jpg","141 - (www.mouzamap.tech).jpg","142 - (www.mouzamap.tech).jpg","143 - (www.mouzamap.tech).jpg","144 - (www.mouzamap.tech).jpg","145 - (www.mouzamap.tech).jpg","146 - (www.mouzamap.tech).jpg","147 - (www.mouzamap.tech).jpg","148-1 - (www.mouzamap.tech).jpg","148-2 - (www.mouzamap.tech).jpg","148-3 - (www.mouzamap.tech).jpg","149 - (www.mouzamap.tech).jpg","150 - (www.mouzamap.tech).jpg","151 - (www.mouzamap.tech).jpg","152 - (www.mouzamap.tech).jpg","153 - (www.mouzamap.tech).jpg","154 - (www.mouzamap.tech).jpg","155 - (www.mouzamap.tech).jpg","156-1 - (www.mouzamap.tech).jpg","156-2 - (www.mouzamap.tech).jpg","157 - (www.mouzamap.tech).jpg","158 - (www.mouzamap.tech).jpg","159-1 - (www.mouzamap.tech).jpg","159-2 - (www.mouzamap.tech).jpg","160 - (www.mouzamap.tech).jpg","161-1 - (www.mouzamap.tech).jpg","161-2 - (www.mouzamap.tech).jpg","161-3 - (www.mouzamap.tech).jpg","162 - (www.mouzamap.tech).jpg","163 - (www.mouzamap.tech).jpg","164 - (www.mouzamap.tech).jpg","165 - (www.mouzamap.tech).jpg","166 - (www.mouzamap.tech).jpg","167 - (www.mouzamap.tech).jpg","168 - (www.mouzamap.tech).jpg","169 - (www.mouzamap.tech).jpg","170-1 - (www.mouzamap.tech).jpg","170-2 - (www.mouzamap.tech).jpg","171 - (www.mouzamap.tech).jpg","172 - (www.mouzamap.tech).jpg","173 - (www.mouzamap.tech).jpg","174-1 - (www.mouzamap.tech).jpg","174-2 - (www.mouzamap.tech).jpg","175-1 - (www.mouzamap.tech).jpg","175-2 - (www.mouzamap.tech).jpg","175-3 - (www.mouzamap.tech).jpg","175-4 - (www.mouzamap.tech).jpg","176 - (www.mouzamap.tech).jpg","177 - (www.mouzamap.tech).jpg","178-1 - (www.mouzamap.tech).jpg","178-2 - (www.mouzamap.tech).jpg","178-3 - (www.mouzamap.tech).jpg","179-1 - (www.mouzamap.tech).jpg","179-2 - (www.mouzamap.tech).jpg","179-3 - (www.mouzamap.tech).jpg","179-4 - (www.mouzamap.tech).jpg","180 - (www.mouzamap.tech).jpg","181 - (www.mouzamap.tech).jpg","182 - (www.mouzamap.tech).jpg","183 - (www.mouzamap.tech).jpg","184 - (www.mouzamap.tech).jpg","185 - (www.mouzamap.tech).jpg","186 - (www.mouzamap.tech).jpg","187 - (www.mouzamap.tech).jpg","188 - (www.mouzamap.tech).jpg","189 - (www.mouzamap.tech).jpg","190 - (www.mouzamap.tech).jpg","191-1 - (www.mouzamap.tech).jpg","191-2 - (www.mouzamap.tech).jpg","192 - (www.mouzamap.tech).jpg","193-1 - (www.mouzamap.tech).jpg","193-2 - (www.mouzamap.tech).jpg","193-3 - (www.mouzamap.tech).jpg","193-4 - (www.mouzamap.tech).jpg","194 - (www.mouzamap.tech).jpg","195 - (www.mouzamap.tech).jpg","196 - (www.mouzamap.tech).jpg","197-1 - (www.mouzamap.tech).jpg","197-2 - (www.mouzamap.tech).jpg","197-3 - (www.mouzamap.tech).jpg","198 - (www.mouzamap.tech).jpg","199 - (www.mouzamap.tech).jpg","200 - (www.mouzamap.tech).jpg","201-1 - (www.mouzamap.tech).jpg","201-2 - (www.mouzamap.tech).jpg","202-1 - (www.mouzamap.tech).jpg","202-2 - (www.mouzamap.tech).jpg","203 - (www.mouzamap.tech).jpg","204 - (www.mouzamap.tech).jpg","205 - (www.mouzamap.tech).jpg","206-1 - (www.mouzamap.tech).jpg","206-2 - (www.mouzamap.tech).jpg","206-3 - (www.mouzamap.tech).jpg","207-1 - (www.mouzamap.tech).jpg","207-2 - (www.mouzamap.tech).jpg","208 - (www.mouzamap.tech).jpg","209-1 - (www.mouzamap.tech).jpg","209-2 - (www.mouzamap.tech).jpg","210-1 - (www.mouzamap.tech).jpg","210-2 - (www.mouzamap.tech).jpg","210-3 - (www.mouzamap.tech).jpg","211 - (www.mouzamap.tech).jpg","212 - (www.mouzamap.tech).jpg","213-1 (2) - (www.mouzamap.tech).jpg","213-1 - (www.mouzamap.tech).jpg","213-2 (2) - (www.mouzamap.tech).jpg","213-2 - (www.mouzamap.tech).jpg","213-3 (2) - (www.mouzamap.tech).jpg","213-3 - (www.mouzamap.tech).jpg","213-4 (2) - (www.mouzamap.tech).jpg","213-4 - (www.mouzamap.tech).jpg","213-5 (2) - (www.mouzamap.tech).jpg","213-5 - (www.mouzamap.tech).jpg","214 - (www.mouzamap.tech).jpg","215 - (www.mouzamap.tech).jpg","216-1 - (www.mouzamap.tech).jpg","216-2 - (www.mouzamap.tech).jpg","216-3 - (www.mouzamap.tech).jpg","217-1 - (www.mouzamap.tech).jpg","217-2 - (www.mouzamap.tech).jpg","217-3 - (www.mouzamap.tech).jpg","217-4 - (www.mouzamap.tech).jpg","217-5 - (www.mouzamap.tech).jpg","217-6 - (www.mouzamap.tech).jpg","217-7 - (www.mouzamap.tech).jpg","217-8 - (www.mouzamap.tech).jpg","218-1 - (www.mouzamap.tech).jpg","218-2 - (www.mouzamap.tech).jpg","218-3 - (www.mouzamap.tech).jpg","218-4 - (www.mouzamap.tech).jpg","218-5 - (www.mouzamap.tech).jpg","218-6 - (www.mouzamap.tech).jpg","219-1 - (www.mouzamap.tech).jpg","219-2 - (www.mouzamap.tech).jpg","219-3 - (www.mouzamap.tech).jpg","219-4 - (www.mouzamap.tech).jpg","220-1 - (www.mouzamap.tech).jpg","220-2 - (www.mouzamap.tech).jpg","221-1 - (www.mouzamap.tech).jpg","221-2 - (www.mouzamap.tech).jpg","221-3 - (www.mouzamap.tech).jpg","221-4 - (www.mouzamap.tech).jpg","222-1 - (www.mouzamap.tech).jpg","222-2 - (www.mouzamap.tech).jpg","223 - (www.mouzamap.tech).jpg","224-1 - (www.mouzamap.tech).jpg","224-2 - (www.mouzamap.tech).jpg","224-3 - (www.mouzamap.tech).jpg","225-1 - (www.mouzamap.tech).jpg","225-2 - (www.mouzamap.tech).jpg","225-3 - (www.mouzamap.tech).jpg","226 - (www.mouzamap.tech).jpg","227 - (www.mouzamap.tech).jpg","228-1 - (www.mouzamap.tech).jpg","228-2 - (www.mouzamap.tech).jpg","229-1 - (www.mouzamap.tech).jpg","229-2 - (www.mouzamap.tech).jpg","230-1 - (www.mouzamap.tech).jpg","230-2 - (www.mouzamap.tech).jpg","230-3 - (www.mouzamap.tech).jpg","230-4 - (www.mouzamap.tech).jpg","231 - (www.mouzamap.tech).jpg","232-1 - (www.mouzamap.tech).jpg","232-2 - (www.mouzamap.tech).jpg","233 - (www.mouzamap.tech).jpg","234-1 - (www.mouzamap.tech).jpg","234-2 - (www.mouzamap.tech).jpg","235-1 - (www.mouzamap.tech).jpg","235-2 - (www.mouzamap.tech).jpg","235-3 - (www.mouzamap.tech).jpg","236-1 - (www.mouzamap.tech).jpg","236-2 - (www.mouzamap.tech).jpg","237-1 - (www.mouzamap.tech).jpg","237-2 - (www.mouzamap.tech).jpg","237-3 - (www.mouzamap.tech).jpg","237-4 - (www.mouzamap.tech).jpg","238-1 - (www.mouzamap.tech).jpg","238-2 - (www.mouzamap.tech).jpg"];
 
-const gallery = document.getElementById('gallery');
-const emptyEl = document.getElementById('empty');
-const searchInput = document.getElementById('searchInput');
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const label = f => f.replace(' - (www.mouzamap.tech).jpg','').trim();
+const fullUrl  = f => BASE + '/BS_RS/'        + encodeURIComponent(f);
+const thumbUrl = f => BASE + '/BS_RS_THUMBS/' + encodeURIComponent(f);
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let filteredFiles = [...FILES];
+let currentIndex  = 0;
+
+const gallery     = document.getElementById('gallery');
+const emptyEl     = document.getElementById('empty');
 const resultCount = document.getElementById('resultCount');
 
-let filteredFiles = [...FILES];
-let currentIndex = 0;
-
-function labelFromFile(f) {
-  return f.replace(' - (www.mouzamap.tech).jpg', '').trim();
-}
-
-function urlFromFile(f) {
-  return BASE + '/BS_RS/' + f.replace(/ /g, '%20');
-}
-function thumbFromFile(f) {
-  return BASE + '/BS_RS_THUMBS/' + f.replace(/ /g, '%20');
-}
-// Intersection Observer for lazy loading
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const img = entry.target.querySelector('img[data-src]');
-      if (img) {
-        img.src = img.dataset.src;
-        img.removeAttribute('data-src');
-        img.onload = () => { img.classList.remove('loading'); img.classList.add('loaded'); };
-      }
-      observer.unobserve(entry.target);
-    }
+// ── INTERSECTION OBSERVERS ────────────────────────────────────────────────────
+//
+//  loadObserver   → fires when a card enters viewport + 600px buffer → sets
+//                   img.src and triggers the fade-in via the .loaded class.
+//
+//  unloadObserver → declared but intentionally inert. Previously it cleared
+//                   img.src when cards left the viewport, which caused already-
+//                   rendered images to blank out and show the shimmer skeleton
+//                   again. That behaviour is removed: images stay loaded once
+//                   rendered so scrolling up reveals them instantly.
+//
+const loadObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const card = e.target;
+    if (card.classList.contains('error')) return;
+    const img = card.querySelector('img');
+    if (img && !img.src) img.src = card.dataset.thumb;
   });
-}, { rootMargin: '400px' });
+}, { rootMargin: '600px' });
 
+// unloadObserver is intentionally inert.
+// Blanking img.src as cards leave the viewport caused loaded images to flash
+// back to the shimmer skeleton, creating a jarring experience. Images are now
+// kept in memory once loaded — browsers handle memory pressure on their own.
+const unloadObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) return;         // still in or near viewport → keep
+    const card = e.target;
+    if (card.classList.contains('error')) return;
+    const img = card.querySelector('img');
+    if (!img) return;
+    // img.src = '';                       // REMOVED — do not blank loaded images
+    // card.classList.remove('loaded');    // REMOVED — skeleton must not reappear
+  });
+}, { rootMargin: '-50px' });
+
+// ── BUILD ONE CARD (skeleton only — no image src yet) ─────────────────────────
+function createCard(f, idx) {
+  const lbl = label(f);
+  const div = document.createElement('div');
+  div.className    = 'thumb';
+  div.title        = 'Map ' + lbl;
+  div.dataset.thumb = thumbUrl(f);   // observer reads this to set img.src
+
+  const skel = document.createElement('div'); skel.className = 'skel';
+
+  const img = document.createElement('img');
+  img.alt = 'Map ' + lbl;
+  // No referrerPolicy override — browser sends Referer so R2 allows the request
+  img.onload  = () => div.classList.add('loaded');
+  img.onerror = () => {
+    div.classList.add('error');
+    div.querySelector('.err').style.display = 'flex';
+  };
+
+  const err = document.createElement('div');
+  err.className = 'err';
+  err.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3a3a3a" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 3-3 4 4"/></svg><span style="color:#444">' + lbl + '</span>';
+
+  const lblEl = document.createElement('div');
+  lblEl.className   = 'label';
+  lblEl.textContent = lbl;
+
+  div.appendChild(skel);
+  div.appendChild(img);
+  div.appendChild(err);
+  div.appendChild(lblEl);
+
+  div.addEventListener('click', () => openLightbox(idx));
+  return div;
+}
+
+// ── RENDER ALL CARDS AT ONCE (only skeletons, no HTTP requests yet) ───────────
 function renderGallery(files) {
+  // Stop observing old cards before wiping the DOM
+  gallery.querySelectorAll('.thumb').forEach(c => {
+    loadObserver.unobserve(c);
+  });
   gallery.innerHTML = '';
   emptyEl.style.display = files.length === 0 ? 'block' : 'none';
   resultCount.textContent = files.length === FILES.length ? '' : `${files.length} results`;
 
+  const frag = document.createDocumentFragment();
   files.forEach((f, i) => {
-    const url = urlFromFile(f);
-    const label = labelFromFile(f);
+    const card = createCard(f, i);
+    frag.appendChild(card);
+  });
+  gallery.appendChild(frag);
 
-    const div = document.createElement('div');
-    div.className = 'thumb';
-    div.title = 'Map ' + label;
-
-    const skel = document.createElement('div');
-    skel.className = 'skel';
-   const img = document.createElement('img');
-    img.className = 'loading';
-    img.loading = "lazy";
-    img.decoding = "async";
-    img.referrerPolicy = "no-referrer";
-    img.dataset.src = thumbFromFile(f);
-    img.alt = 'Map ' + label;
-    img.onload = () => {
-      img.classList.remove('loading');
-      img.classList.add('loaded');
-      skel.remove();
-    };
-    img.onerror = () => {
-      skel.remove();
-      img.style.display = 'none';
-      const err = document.createElement('div');
-      err.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:11px;color:#555;padding:8px;text-align:center;';
-      err.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3a3a3a" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 3-3 4 4"/></svg><span style="color:#444">' + label + '</span>';
-      div.appendChild(err);
-    };
-
-    const lbl = document.createElement('div');
-    lbl.className = 'label';
-    lbl.textContent = label;
-
-    div.appendChild(skel);
-    div.appendChild(img);
-    div.appendChild(lbl);
-
-    div.addEventListener('click', () => openLightbox(i, files));
-    gallery.appendChild(div);
-    observer.observe(div);
+  // Register every card with the load observer AFTER they're in the DOM
+  gallery.querySelectorAll('.thumb').forEach(card => {
+    loadObserver.observe(card);
   });
 }
 
-// Search
+// ── SEARCH ────────────────────────────────────────────────────────────────────
 let debounceTimer;
-searchInput.addEventListener('input', () => {
+document.getElementById('searchInput').addEventListener('input', function() {
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
-    const q = searchInput.value.trim().toLowerCase();
-    filteredFiles = q
-      ? FILES.filter(f => labelFromFile(f).toLowerCase().includes(q))
-      : [...FILES];
+    const q = this.value.trim().toLowerCase();
+    filteredFiles = q ? FILES.filter(f => label(f).toLowerCase().includes(q)) : [...FILES];
     renderGallery(filteredFiles);
   }, 200);
 });
 
-// Grid toggle
+// ── GRID TOGGLE ───────────────────────────────────────────────────────────────
 function setGrid(size) {
-  gallery.className = size === 'md' ? '' : (size === 'lg' ? 'grid-lg' : 'grid-sm');
-  document.getElementById('btnSm').classList.toggle('active', size === 'sm');
-  document.getElementById('btnMd').classList.toggle('active', size === 'md');
-  document.getElementById('btnLg').classList.toggle('active', size === 'lg');
+  gallery.className = size === 'md' ? '' : 'grid-' + size;
+  ['sm','md','lg'].forEach(s => document.getElementById('btn'+s.charAt(0).toUpperCase()+s.slice(1)).classList.toggle('active', s === size));
 }
 
-// Lightbox
-const lightbox = document.getElementById('lightbox');
-const lbImg = document.getElementById('lb-img');
-const lbLabel = document.getElementById('lb-label');
+// ── LIGHTBOX ──────────────────────────────────────────────────────────────────
+const lightbox  = document.getElementById('lightbox');
+const lbImg     = document.getElementById('lb-img');
+const lbLabel   = document.getElementById('lb-label');
 const lbCounter = document.getElementById('lb-counter');
-const lbDl = document.getElementById('lb-dl');
+const lbDl      = document.getElementById('lb-dl');
 
-function openLightbox(idx, files) {
+function openLightbox(idx) {
   currentIndex = idx;
-  showLbImage(files);
+  showLbImage();
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
-function showLbImage(files) {
-  const f = files ? files[currentIndex] : filteredFiles[currentIndex];
-  const url = urlFromFile(f);
+function showLbImage() {
+  const f = filteredFiles[currentIndex]; if (!f) return;
+  const url = fullUrl(f);
   lbImg.classList.add('loading');
   lbImg.src = url;
   lbImg.onload = () => lbImg.classList.remove('loading');
-  lbLabel.textContent = 'Map ' + labelFromFile(f);
-  lbCounter.textContent = (currentIndex + 1) + ' / ' + (files || filteredFiles).length;
-  lbDl.href = url;
-  lbDl.download = f;
+  lbLabel.textContent   = 'Map ' + label(f);
+  lbCounter.textContent = (currentIndex + 1) + ' / ' + filteredFiles.length;
+  lbDl.href = url; lbDl.download = f;
 }
+function closeLightbox() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
 
-document.getElementById('lb-prev').addEventListener('click', (e) => {
-  e.stopPropagation();
-  currentIndex = (currentIndex - 1 + filteredFiles.length) % filteredFiles.length;
-  showLbImage();
-});
-
-document.getElementById('lb-next').addEventListener('click', (e) => {
-  e.stopPropagation();
-  currentIndex = (currentIndex + 1) % filteredFiles.length;
-  showLbImage();
-});
-
+document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); currentIndex = (currentIndex - 1 + filteredFiles.length) % filteredFiles.length; showLbImage(); });
+document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); currentIndex = (currentIndex + 1) % filteredFiles.length; showLbImage(); });
 document.getElementById('lb-close').addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 
-function closeLightbox() {
-  lightbox.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
   if (!lightbox.classList.contains('open')) return;
-  if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + filteredFiles.length) % filteredFiles.length; showLbImage(); }
+  if (e.key === 'ArrowLeft')  { currentIndex = (currentIndex - 1 + filteredFiles.length) % filteredFiles.length; showLbImage(); }
   if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % filteredFiles.length; showLbImage(); }
   if (e.key === 'Escape') closeLightbox();
 });
 
 function copyLink() {
-  const f = filteredFiles[currentIndex];
-  navigator.clipboard.writeText(urlFromFile(f)).then(() => {
-    const btn = document.querySelector('#lb-info .lb-btn:last-child');
+  navigator.clipboard.writeText(fullUrl(filteredFiles[currentIndex])).then(() => {
+    const btn = document.getElementById('lb-copy-btn');
     const orig = btn.innerHTML;
     btn.textContent = 'Copied!';
-    setTimeout(() => btn.innerHTML = orig, 1800);
+    setTimeout(() => { btn.innerHTML = orig; }, 1800);
   });
 }
 
-// Touch swipe
-let touchStartX = 0;
-lbImg.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, {passive:true});
-lbImg.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(dx) > 50) {
-    currentIndex = dx < 0
-      ? (currentIndex + 1) % filteredFiles.length
-      : (currentIndex - 1 + filteredFiles.length) % filteredFiles.length;
-    showLbImage();
-  }
-}, {passive:true});
+let tx = 0;
+lbImg.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+lbImg.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) { currentIndex = dx < 0 ? (currentIndex+1)%filteredFiles.length : (currentIndex-1+filteredFiles.length)%filteredFiles.length; showLbImage(); }
+}, { passive: true });
 
-// Init
+// ── INIT ──────────────────────────────────────────────────────────────────────
 renderGallery(FILES);
-let loaded = 80;
-
-window.addEventListener('scroll', () => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-    const next = FILES.slice(loaded, loaded + 60);
-    if (next.length === 0) return;
-
-    loaded += 60;
-
-    next.forEach((f, i) => {
-      const url = urlFromFile(f);
-      const label = labelFromFile(f);
-
-      const div = document.createElement('div');
-      div.className = 'thumb';
-
-      const skel = document.createElement('div');
-      skel.className = 'skel';
-
-      const img = document.createElement('img');
-      img.className = 'loading';
-      img.loading = "lazy";
-      img.decoding = "async";
-      img.referrerPolicy = "no-referrer";
-      img.dataset.src = thumbFromFile(f);
-
-      img.onload = () => {
-        img.classList.remove('loading');
-        skel.remove();
-      };
-
-      div.appendChild(skel);
-      div.appendChild(img);
-      gallery.appendChild(div);
-      observer.observe(div);
-    });
-  }
-});
 </script>
 </body>
 </html>
