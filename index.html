@@ -210,16 +210,21 @@ const gallery     = document.getElementById('gallery');
 const emptyEl     = document.getElementById('empty');
 const resultCount = document.getElementById('resultCount');
 
-// ── INTERSECTION OBSERVERS ────────────────────────────────────────────────────
+// ── INTERSECTION OBSERVER ─────────────────────────────────────────────────────
 //
-//  loadObserver   → fires when a card enters viewport + 600px buffer → sets
-//                   img.src and triggers the fade-in via the .loaded class.
+//  loadObserver fires when a card enters the viewport + 1000px lookahead buffer.
+//  img.dataset.loaded acts as a one-time flag so the browser never re-evaluates
+//  layout or re-fires fetch logic for a card that has already been handled —
+//  more reliable than testing img.src, which can be empty-string or a blob URL.
 //
-//  unloadObserver → declared but intentionally inert. Previously it cleared
-//                   img.src when cards left the viewport, which caused already-
-//                   rendered images to blank out and show the shimmer skeleton
-//                   again. That behaviour is removed: images stay loaded once
-//                   rendered so scrolling up reveals them instantly.
+//  The unloadObserver has been removed entirely. Blanking img.src on scroll-away
+//  caused rendered thumbnails to flash back to the shimmer skeleton, which was
+//  the root UX bug. Images are intentionally kept in memory once decoded;
+//  browsers manage their own tile/texture eviction under memory pressure.
+//
+//  NOTE: If the gallery grows beyond ~1000 images, consider replacing this
+//  approach with virtual scrolling (e.g. a windowed list) or server-side
+//  pagination to cap the number of live DOM nodes and decoded textures.
 //
 const loadObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -227,25 +232,12 @@ const loadObserver = new IntersectionObserver(entries => {
     const card = e.target;
     if (card.classList.contains('error')) return;
     const img = card.querySelector('img');
-    if (img && !img.src) img.src = card.dataset.thumb;
+    if (img && !img.dataset.loaded) {
+      img.src = card.dataset.thumb;
+      img.dataset.loaded = '1';           // mark as dispatched — never re-fetch
+    }
   });
-}, { rootMargin: '600px' });
-
-// unloadObserver is intentionally inert.
-// Blanking img.src as cards leave the viewport caused loaded images to flash
-// back to the shimmer skeleton, creating a jarring experience. Images are now
-// kept in memory once loaded — browsers handle memory pressure on their own.
-const unloadObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) return;         // still in or near viewport → keep
-    const card = e.target;
-    if (card.classList.contains('error')) return;
-    const img = card.querySelector('img');
-    if (!img) return;
-    // img.src = '';                       // REMOVED — do not blank loaded images
-    // card.classList.remove('loaded');    // REMOVED — skeleton must not reappear
-  });
-}, { rootMargin: '-50px' });
+}, { rootMargin: '1000px' });             // 1000px lookahead → smooth fast scrolls
 
 // ── BUILD ONE CARD (skeleton only — no image src yet) ─────────────────────────
 function createCard(f, idx) {
@@ -262,6 +254,7 @@ function createCard(f, idx) {
   // No referrerPolicy override — browser sends Referer so R2 allows the request
   img.onload  = () => div.classList.add('loaded');
   img.onerror = () => {
+    console.error('Thumbnail failed to load:', card.dataset.thumb);
     div.classList.add('error');
     div.querySelector('.err').style.display = 'flex';
   };
